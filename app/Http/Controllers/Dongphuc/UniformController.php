@@ -51,6 +51,7 @@ class UniformController extends Controller
         $sanphams = $this->getSanpham();
         return view('dongphuc.uniforms.store', compact('sanphams'));
     }
+// 
 
     public function showDetail($id_loai)
 {
@@ -209,71 +210,70 @@ class UniformController extends Controller
 
     public function filter(Request $request)
     {
-        $query = DB::table('sanpham')
-            ->leftJoin('kho', 'sanpham.sp_id', '=', 'kho.sp_id')
-            ->leftJoin('size', 'kho.size_id', '=', 'size.size_id')
-            ->leftJoin('danhmuc', 'sanpham.dm_id', '=', 'danhmuc.dm_id')
-            ->leftJoin(DB::raw('(SELECT sp_id, SUM(soluong) AS so_luong_da_ban FROM chitiethoadon GROUP BY sp_id) AS ban'), function ($join) {
-                $join->on('sanpham.sp_id', '=', 'ban.sp_id');
-            })
-            ->leftJoin(DB::raw('(SELECT sp_id, COUNT(*) AS rating_count, AVG(rating) AS avg_rating FROM danhgia GROUP BY sp_id) AS dg'), function ($join) {
-                $join->on('sanpham.sp_id', '=', 'dg.sp_id');
-            })
-            ->select(
-                'sanpham.sp_id',
-                'sanpham.tensp',
-                'sanpham.gia',
-                'sanpham.image_url',
-                'sanpham.mota',
-                'sanpham.created_at',
-                'sanpham.updated_at',
-                DB::raw('MAX(size.ten) as size'),
-                DB::raw('MAX(danhmuc.ten) as danhmuc'),
-                DB::raw('IFNULL(MAX(ban.so_luong_da_ban), 0) as so_luong_da_ban'),
-                DB::raw('IFNULL(MAX(dg.rating_count), 0) as rating_count'),
-                DB::raw('IFNULL(MAX(dg.avg_rating), 0) as avg_rating')
-            )
-            ->groupBy(
-                'sanpham.sp_id',
-                'sanpham.tensp',
-                'sanpham.gia',
-                'sanpham.image_url',
-                'sanpham.mota',
-                'sanpham.created_at',
-                'sanpham.updated_at'
-            )
-            ->orderBy('sanpham.created_at', 'desc');
-            // ->get();
+        $query = DB::table('24_kho')
+    ->selectRaw('
+        24_loaisanpham.id AS id_loai,
+        24_loaisanpham.loai AS loai,
+        24_loaisanpham.mota AS mota,
+        24_loaisanpham.anhsanpham AS anhsanpham,
+        (
+            SELECT gia 
+            FROM 24_gia 
+            WHERE 24_gia.id_loai = 24_loaisanpham.id 
+            ORDER BY 24_gia.id DESC 
+            LIMIT 1
+        ) AS gia,
+        (
+            SELECT SUM(hd.sl_phat)
+            FROM 24_hoadon AS hd
+            INNER JOIN 24_danhmuc_sanpham AS sp ON sp.id = hd.id_sanpham
+            WHERE sp.id_loai = 24_loaisanpham.id
+        ) AS slphat,
+        SUM(24_kho.soluongton) AS tonkho,
+        MAX(24_danhmuc_size.size) AS ten_size,
+        MAX(24_dotnhap.dotnhap) AS dotnhap,
+        MAX(24_danhmuc_nhasanxuat.nhasanxuat) AS nsx,
+        MAX(24_kho.trangthai) AS trangthai,
+        MAX(24_danhmuc_sanpham.create_at) AS create_at
+    ')
+    ->join('24_dotnhap', '24_dotnhap.id', '=', '24_kho.id_dotnhap')
+    ->join('24_danhmuc_sanpham', '24_danhmuc_sanpham.id', '=', '24_kho.idsanpham')
+    ->join('24_danhmuc_nhasanxuat', '24_danhmuc_nhasanxuat.id', '=', '24_danhmuc_sanpham.id_nhasanxuat')
+    ->join('24_loaisanpham', '24_loaisanpham.id', '=', '24_danhmuc_sanpham.id_loai')
+    ->join('24_danhmuc_size', '24_danhmuc_size.id', '=', '24_danhmuc_sanpham.id_size')
+    ->groupBy('24_loaisanpham.id', '24_loaisanpham.loai', '24_loaisanpham.mota', '24_loaisanpham.anhsanpham');
 
-                // Lọc theo danh mục
+
+        // Lọc theo danh mục
         if ($request->filled('danhmuc') && $request->danhmuc != 0) {
-            $query->where('sanpham.dm_id', $request->danhmuc);
+            $query->where('24_loaisanpham.id', $request->danhmuc);
         }
 
         // Lọc theo NSX
         if ($request->filled('nsx_id') && $request->nsx_id != 0) {
-            $query->where('sanpham.nsx_id', $request->nsx_id);
+            $query->where('24_danhmuc_nhasanxuat.id', $request->nsx_id);
         }
 
         // Sắp xếp theo giá
         if ($request->gia === '1') {
-            $query->orderBy('sanpham.gia', 'desc');
+            $query->orderBy('gia', 'desc');
         } elseif ($request->gia === '2') {
-            $query->orderBy('sanpham.gia', 'asc');
+            $query->orderBy('gia', 'asc');
         }
 
         // Sắp xếp theo loại
         if ($request->sort === 'moi-nhat') {
-            $query->orderBy('sanpham.created_at', 'desc');
+            $query->orderBy('create_at', 'desc');
         } elseif ($request->sort === 'ban-chay') {
-            $query->orderByDesc('so_luong_da_ban');
-        } elseif ($request->sort === 'pho-bien') {
-            $query->orderByDesc('rating_count');
-        }
+            $query->orderByDesc('slphat');
+        } 
+        // elseif ($request->sort === 'pho-bien') {
+        //     $query->orderByDesc('rating_count');
+        // }
 
         $sanphams = $query->get();
 
-        return view('user.uniforms.store', compact('sanphams'));
+        return view('dongphuc.uniforms.store', compact('sanphams'));
     }
 
     public function muaLai($hd_id)

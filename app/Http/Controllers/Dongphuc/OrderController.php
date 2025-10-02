@@ -22,28 +22,34 @@ class OrderController extends Controller
 
         $user_id = Auth::user()->user_id;
 
-        $cartItems = DB::table('giohang as gh')
-            ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
-            ->join('size', 'gh.size_id', '=', 'size.size_id')
-            ->join('kho', function ($join) {
-                $join->on('kho.sp_id', '=', 'gh.sp_id')
-                    ->on('kho.size_id', '=', 'gh.size_id');
-            })
-            ->where('gh.user_id', $user_id)
-            ->select(
-                'gh.*',
-                'sanpham.tensp as tensp',
-                'sanpham.sp_id',
-                'sanpham.gia',
-                'sanpham.image_url',
-                'size.ten as tensize',
-                'kho.kho_id',
-                'kho.tonkho as tonkho'
-            )
-            ->get();
-
-        return view('user.orders.cart', compact('cartItems'));
+        $cartItems = DB::select("
+    SELECT 
+        gh.*,
+        loai.id AS id_loai,
+        loai.loai AS loai,
+        (
+            SELECT gia 
+            FROM `24_gia` 
+            WHERE `24_gia`.id_loai = loai.id 
+            ORDER BY `24_gia`.id DESC 
+            LIMIT 1
+        ) AS gia,
+        loai.anhsanpham AS anhsanpham,
+        sz.size AS ten_size,
+        kho.soluongton AS tonkho
+    FROM 24_giohang_dongphuc gh
+    INNER JOIN `24_danhmuc_sanpham` sp ON sp.id = gh.id_sanpham
+    INNER JOIN `24_danhmuc_size` sz ON sz.id = sp.id_size
+    INNER JOIN `24_loaisanpham` loai ON loai.id = sp.id_loai
+    INNER JOIN `24_kho` kho ON kho.idsanpham = sp.id
+    WHERE gh.id_nguoinhan = ?
+    ", [$user_id]);
+        
+        return view('dongphuc.orders.cart', compact('cartItems'));
     }
+        
+    
+
 
     public function getSizes(Request $request)
     {
@@ -186,7 +192,7 @@ class OrderController extends Controller
         return view('user.orders.payment');
     }
 
-    // Thanh toán
+    Thanh toán
     public function checkout(Request $request)
     {
         $items = $request->input('items');

@@ -11,7 +11,7 @@ class nhaSXController extends Controller
 {
     public function nsx(Request $request)
     {
-        $nsx = nhaSX::select('nsx_id as id', 'ten as text')->get();
+        $nsx = nhaSX::select('id as id', 'nhasanxuat as text')->get();
         return response()->json($nsx);
     }
 

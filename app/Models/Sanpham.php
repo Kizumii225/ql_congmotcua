@@ -8,18 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 class Sanpham extends Model
 {
     use HasFactory;
-    protected $table = 'sanpham';
+    // protected $table = '24_danhmuc_sanpham';
+    // protected $fillable = [
+    //     'id', 'loai', 'mota', 'gia', 'anhsanpham', 'id_loai', 'id_nhasanxuat',
+    // ];
+    // public $timestamps = true;
+    protected $table = '24_loaisanpham';  
+
     protected $fillable = [
-        'sp_id', 'tensp', 'mota', 'gia', 'image_url', 'dm_id', 'nsx_id',
+        'id', 'loai', 'mota', 'gia', 'anhsanpham',
     ];
-    public $timestamps = true;
+
+    public $timestamps = true; 
+    public function gia()
+    {
+        return $this->hasOne(Gia::class, 'id_loai', 'id'); 
+    }
     public function danhmuc()
     {
-        return $this->belongsTo(Danhmuc::class, 'dm_id', 'dm_id');
+        return $this->belongsTo(Danhmuc::class, 'id_loai', 'id');
     }
     public function nhasanxuat()
     {
-        return $this->belongsTo(nhaSX::class, 'nsx_id', 'nsx_id');
+        return $this->belongsTo(nhaSX::class, 'id_nhasanxuatd', 'id');
     }
     public function tonkho()
     {

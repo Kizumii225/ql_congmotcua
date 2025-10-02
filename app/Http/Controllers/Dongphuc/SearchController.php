@@ -18,7 +18,7 @@ class SearchController extends Controller
     {
         $query = $request->input('query');  
 
-        $sanphams = Sanpham::where('tensp', 'like', '%' . $query . '%')
+        $sanphams = Sanpham::where('loai', 'like', '%' . $query . '%')
                             ->get();
 
         return response()->json($sanphams);  
@@ -27,7 +27,7 @@ class SearchController extends Controller
     {
         $query = $request->query('keyword');
 
-        $results = Sanpham::where('tensp', 'like', '%' . $query . '%')
+        $results = Sanpham::where('loai', 'like', '%' . $query . '%')
             ->get();
 
         return response()->json($results);

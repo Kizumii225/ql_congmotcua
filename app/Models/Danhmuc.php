@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Danhmuc extends Model
 {
     use HasFactory;
-    protected $table = 'danhmuc';
+    protected $table = '24_loaisanpham';
     protected $fillable = [
-        'dm_id', 'ten', 
+        'id', 'loai', 
     ];
     public $timestamps = false;
 }

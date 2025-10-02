@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class nhaSX extends Model
+class Gia extends Model
 {
     use HasFactory;
-    protected $table = '24_danhmuc_nhasanxuat';
+    protected $table = '24_gia';
     protected $fillable = [
-        'id', 'nhasanxuat', 
+        'id', 'id_loai','gia', 
     ];
     public $timestamps = false;
 }

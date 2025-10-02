@@ -420,16 +420,16 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
                     resultsContainer.innerHTML += `
                         <div class="search-item">
                             <a class="sreach-a" href="${linksearchURL}${
-                        item.sp_id
+                        item.id_loai
                     }" style="color: black;">
                                 <div class="row">
                                     <div class="col-4 d-flex-column justify-content-center align-items-center">
                                         <img src="${imgURL}/${
-                        item.image_url
-                    }" alt="${item.tensp}" width="80%" class="me-2" />
+                        item.anhsanpham
+                    }" alt="${item.loai}" width="80%" class="me-2" />
                                     </div>
                                     <div class="col-8 ">
-                                        <h1><strong>${item.tensp}</strong></h1>
+                                        <h1><strong>${item.loai}</strong></h1>
                                         <h2  style="color: red;">${formatCurrency(
                                             item.gia
                                         )} VND</h2>

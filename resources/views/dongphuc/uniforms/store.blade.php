@@ -40,25 +40,29 @@
     <!-- Product -->
     <div class="product row mt-2">
         <div class="row d-flex overflow-auto">
-            @foreach($sanphams as $sp)
-                <div class="col-6 col-md-3 mt-4 d-flex">
-                    <a href="{{ route('uniforms.show_detail', $sp->id_loai) }}" class="text-decoration-none text-dark w-100">
-                        <div class="card h-100 shadow-sm border-0 product-card">
-                            <img src="{{  $sp->anhsanpham }}" class="card-img-top" alt="{{ $sp->loai }}" style="height: 200px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-truncate">{{ $sp->loai }}</h5>
-                                <p class="card-text text-truncate small">{{ $sp->mota }}</p>
-                                <div class="mt-auto d-flex justify-content-between align-items-center">
-                                    <p class="fs-5 fw-bold text-danger mb-0">
-                                        {{ number_format($sp->gia, 0, ',', '.') }} ₫
-                                    </p>
-                                    <p class="fs-6 text-muted mb-0">Đã bán: {{ $sp->slphat ?? 0 }}</p>
+            @if(count($sanphams) === 0)
+                <p class="text-center text-muted">Không tìm thấy sản phẩm nào.</p>
+            @else
+                @foreach($sanphams as $sp)
+                    <div class="col-6 col-md-3 mt-4 d-flex">
+                        <a href="{{ route('uniforms.show_detail', $sp->id_loai) }}" class="text-decoration-none text-dark w-100">
+                            <div class="card h-100 shadow-sm border-0 product-card">
+                                <img src="{{  $sp->anhsanpham }}" class="card-img-top" alt="{{ $sp->loai }}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-truncate">{{ $sp->loai }}</h5>
+                                    <p class="card-text text-truncate small">{{ $sp->mota }}</p>
+                                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                                        <p class="fs-5 fw-bold text-danger mb-0">
+                                            {{ number_format($sp->gia, 0, ',', '.') }} ₫
+                                        </p>
+                                        <p class="fs-6 text-muted mb-0">Đã bán: {{ $sp->slphat ?? 0 }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
+                        </a>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 @endsection

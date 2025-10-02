@@ -122,7 +122,7 @@ use \App\Http\Controllers\User_24\ConnectionController;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
-
+//Đồng phục nhat-mong-my
 use App\Http\Controllers\Dongphuc\HomeController;
 use App\Http\Controllers\Dongphuc\UniformController;
 use App\Http\Controllers\Dongphuc\OrderController;
@@ -132,7 +132,7 @@ use App\Http\Controllers\Dongphuc\Size1Controller;
 use App\Http\Controllers\Dongphuc\DanhmucController;
 use App\Http\Controllers\Dongphuc\nhaSXController;
 use App\Http\Controllers\Dongphuc\ptThanhToanController;
-// use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\Login1Controller;
 use App\Http\Controllers\Dongphuc\DanhGiaController;
 // use App\Http\Controllers\Admin\AdminController;
 // use App\Http\Controllers\Admin\AdminSanphamController;
@@ -844,7 +844,7 @@ Route::prefix('user')->group(function () {
     Route::get('/store', [UniformController::class, 'store'])->name('uniforms.store');
     Route::get('/store/filter', [UniformController::class, 'filter'])->name('store.filter');
 
-    Route::get('/uniforms/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
+    Route::get('/uniforms/{loai_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
     Route::post('/uniforms/addSP', [UniformController::class, 'addSP'])->name('addSP');
     Route::post('/mualai/{hd_id}', [UniformController::class, 'muaLai'])->name('uniforms.muaLai');
     Route::post('/submit-review', [DanhGiaController::class, 'danhgia'])->name('reviews.danhgia');
@@ -881,9 +881,9 @@ Route::prefix('user')->group(function () {
 
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/login', [Login1Controller::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [Login1Controller::class, 'login'])->name('login.post');
+    Route::post('/logout', [Login1Controller::class, 'logout'])->name('logout');
 
 });
 

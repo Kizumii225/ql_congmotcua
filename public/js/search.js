@@ -15,9 +15,9 @@ $(document).ready(function () {
                         data.forEach((item) => {
                             html += `
                                 <a href="/user/uniforms/${
-                                    item.sp_id
+                                    item.id_loai
                                 }" class="d-block p-2 text-dark border-bottom">
-                                    <strong>${item.tensp}</strong><br>
+                                    <strong>${item.loai}</strong><br>
                                     <small>Giá: ${item.gia.toLocaleString()} đ</small>
                                 </a>
                             `;

@@ -11,7 +11,7 @@ class DanhmucController extends Controller
 {   
     public function danhmuc(Request $request)
     {
-        $danhmuc = Danhmuc::select('dm_id as id', 'ten as text')->get();
+        $danhmuc = Danhmuc::select('id as id', 'loai as text')->get();
         return response()->json($danhmuc);
     }
 
