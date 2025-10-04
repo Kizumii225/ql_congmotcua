@@ -12,10 +12,10 @@ class Account24 extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'account24s'; // 👈 thêm dòng này để Laravel hiểu đúng tên bảng
+
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * Các cột cho phép gán hàng loạt (mass assignable)
      */
     protected $fillable = [
         'name',
@@ -23,12 +23,13 @@ class Account24 extends Authenticatable
         'password',
         'google_id',
         'img_gg',
+        'admin',
+        'status',
+        'cccd_bo',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+     * Các cột sẽ bị ẩn khi chuyển sang JSON / mảng
      */
     protected $hidden = [
         'password',
@@ -36,9 +37,7 @@ class Account24 extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+     * Kiểu dữ liệu đặc biệt (casting)
      */
     protected $casts = [
         'email_verified_at' => 'datetime',

@@ -5,6 +5,10 @@ $(document).ready(function () {
         },
     });
 
+    $("#toggleSidebar").click(function () {
+        $(".mini-sidebar").toggleClass("open");
+    });
+
     saukhiload();
 
     loadbandau();

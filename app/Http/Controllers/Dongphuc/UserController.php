@@ -16,7 +16,7 @@ class UserController extends Controller
         if (Auth::check()) {
             $user_id = Auth::user()->user_id;
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login.form');
         }
 
         // Thông tin người dùng

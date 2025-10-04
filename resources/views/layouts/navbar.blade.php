@@ -1,131 +1,75 @@
-<!-- <header class="header">
-    <a href="{{ route('home.index') }}">
-        <img src="{{ asset('images/logo3.jpg') }}" alt="aa" class="logo">
-    </a>
-    <div class="name-header">
-        <p>TRƯỜNG ĐẠI HỌC</p>
-        <p>KỸ THUẬT - CÔNG NGHỆ CẦN THƠ</p>
-        <p>MÃ TRƯỜNG: KCC</p>
-    </div>        
-    <div class="nav-header">
-        <div class="nav-pc d-flex justify-content-around icon-link-hover">
-            <a href="{{ route('uniforms.store') }}" class="nav-item"><i class="fas fa-shopping-bag"></i><span>Cửa hàng</span></a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-comment"></i><span>Chat</span></a>
-            <a href="{{ route('home.index') }}" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
-            <a href="{{ route('orders.cart') }}" class="nav-item"><i class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a>
-            <a href="{{ route('user.profile') }}" class="nav-item"><i class="fas fa-user"></i><span>Hồ sơ</span></a>
-        </div>
-    </div>
-</header> -->
+<!-- Header chính -->
+<header class="main-header1 navbar navbar-expand navbar-white navbar-light shadow-sm">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
 
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <div class="navbar-nav row w-100">
-        <div class="col-1 fs-1">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </div>
-        <div class="col-11 nav-search p-3 row justify-content-center">
-            <div class="position-relative w-75">
-                <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                <div id="searchResults" class="dropdown-menu w-100 shadow" style="max-height: 400px; overflow-y: auto;"></div>
-            </div>
-        </div>
-    </div>
-    <!-- Right navbar links -->
-    
-</nav>
-
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar elevation-4">
-    <!-- Brand Logo -->
-    <a href="{{ route('/') }}" class="brand-link">
-        <img src="{{ asset('images/logo3.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">CTUT</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user (optional) -->
-        <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">MENU</a>
-            </div>
-        </div> -->
-
-        <!-- SidebarSearch Form -->
-        <div class="form-inline position-relative">
-            <div class="input-group" data-widget="sidebar-search">
-                <input id="sidebar-search-input" class="form-control form-control-sidebar" type="search" placeholder="Tìm sản phẩm..." aria-label="Search" autocomplete="off">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
+        <!-- Logo và tên trường -->
+        <div class="d-flex align-items-center">
+            <a href="{{ route('home.index') }}" class="navbar-brand d-flex align-items-center">
+                <img src="{{ asset('images/logo3.jpg') }}" alt="Logo" class="brand-image img-circle elevation-3 me-2" style="height: 40px;">
+                <div class="school-name">
+                    <p class="mb-0 fw-bold text-primary">TRƯỜNG ĐẠI HỌC</p>
+                    <p class="mb-0 fw-bold text-primary">KỸ THUẬT - CÔNG NGHỆ CẦN THƠ</p>
+                    <p class="mb-0 text-secondary small">MÃ TRƯỜNG: KCC</p>
                 </div>
-            </div>
-
-            <!-- Kết quả tìm kiếm -->
-            <div id="sidebar-search-result" class="position-absolute w-100 bg-white shadow rounded mt-3" style="z-index: 9999; display: none;"></div>
+            </a>
         </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="{{ route('uniforms.store') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Cửa hàng</p>
-                    </a>
-                    <!-- <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../index3.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-                    </ul> -->
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Chat</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('home.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>Trang chủ</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('orders.cart') }}" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
-                        <p>Giỏ hàng</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('user.profile') }}" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
-                        <p>Hồ sơ</p>
-                    </a>
-                </li>
+        <!-- Thanh tìm kiếm -->
+        <div class="search-box d-none d-md-block position-relative w-25">
+            <input id="searchInput" type="text" class="form-control search-input" placeholder="Tìm kiếm sản phẩm...">
+            <span class="search-icon">
+                <i class="fas fa-search"></i>
+            </span>
+            <div id="searchResults" class="dropdown-menu shadow"></div>
+        </div>
+
+        <div class="d-flex gap-3 align-items-center">
+            <a href="" class="text-secondary small d-flex align-items-center" title="Trang chủ">
+                <i class="bi bi-house"></i>
+                <span>Trang chủ</span>
+            </a>
+            <a href="" class="text-secondary small d-flex align-items-center" title="Tin tức">
+                <i class="bi bi-bell"></i>
+                <span>Tin tức</span>
+            </a>
+        </div>
+
+
+        <!-- Thông tin người dùng -->
+        <div class="user-account dropdown">
+            <div class="d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                <img src="{{ Auth::user()->avatar ?? asset('images/avt/default.jpg') }}"
+                    class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
+                <span class="fw-bold text-dark">{{ Auth::user()->name ?? 'Người dùng' }}</span>
+                <i class="fa fa-caret-down ms-1"></i>
+            </div>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li><a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fa fa-user me-2"></i>Thông tin cá nhân</a></li>
+                <li><a class="dropdown-item" href="#" onclick="popupDoiMatKhau()"><i class="fa fa-key me-2"></i>Đổi mật khẩu</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="fa fa-sign-out me-2"></i>Đăng xuất</a></li>
             </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+        </div>
     </div>
-    <!-- /.sidebar -->
+</header>
+
+<!-- Mini Sidebar -->
+<aside class="mini-sidebar">
+    <!-- Nút mở/đóng sidebar -->
+    <div class="mini-sidebar-toggle" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Menu sidebar -->
+    <nav class="mini-sidebar-menu" id="sidebarMenu">
+        <ul>
+            <li><a href="{{ route('uniforms.store') }}"><i class="fas fa-shopping-bag"></i> Cửa hàng</a></li>
+            <li><a href="#"><i class="fa-solid fa-comment"></i> Chat</a></li>
+            <li><a href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a></li>
+            <li><a href="{{ route('orders.cart') }}"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a></li>
+            <li><a href="{{ route('user.profile') }}"><i class="fas fa-user"></i> Hồ sơ</a></li>
+            <li><a href="{{ route('logout') }}" class="text-danger"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+        </ul>
+    </nav>
 </aside>

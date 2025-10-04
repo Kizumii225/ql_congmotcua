@@ -5,76 +5,84 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Admin;
+use App\Models\Account24;
+use Laravel\Socialite\Facades\Socialite;
+use Exception;
 
 class Login1Controller extends Controller
 {
+    /**
+     * Hiển thị form đăng nhập
+     */
     public function showLoginForm()
     {
-        return view('dongphuc.form.sign_in'); 
+        return view('dongphuc.form.sign_in');
     }
 
-    public function login(Request $request)
+    /**
+     * Chuyển hướng sang trang đăng nhập Google
+     */
+    public function redirectToGoogle()
     {
-        $validator = Validator::make($request->all(), [
-            'login' => [
-                'required',
-                'string',
-                'regex:/^([a-zA-Z0-9_]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/'
-            ],
-            'password' => [
-                'required',
-                'string',
-                'regex:/^[a-zA-Z0-9_]+$/'
-            ],
-        ], [
-            'login.required' => 'Vui lòng nhập tên đăng nhập.',
-            'login.regex' => 'Tên đăng nhập phải là email hợp lệ hoặc chỉ gồm chữ cái, số, gạch dưới.',
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-            'password.regex' => 'Mật khẩu không được chứa ký tự đặc biệt.',
-        ]);
-    
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-    
-        // Xác định kiểu đăng nhập: username
-        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? : 'username';
-    
-        // Tìm người dùng theo username
-        $user = User::where($login_type, $request->login)->first();
-    
-        // Kiểm tra tồn tại và mật khẩu
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return redirect()->route('/'); 
-        }
-
-        $admin = Admin::where($login_type, $request->login)->first();
-        // Kiểm tra tồn tại và mật khẩu
-        if ($admin) {
-            Auth::login($admin);
-            return redirect()->route('admin.index'); 
-        }
-
-        return back()->withErrors([
-            'login' => 'Tài khoản hoặc mật khẩu không đúng.',
-        ])->withInput();
+        return Socialite::driver('google')->redirect();
     }
 
+    /**
+     * Xử lý callback Google trả về
+     */
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+
+            // Kiểm tra tồn tại user trong DB
+            $user = Account24::where('google_id', $googleUser->getId())
+                ->orWhere('email', $googleUser->getEmail())
+                ->first();
+
+            if (!$user) {
+                // Không tồn tại => quay lại login form kèm thông báo
+                Auth::logout();
+                return redirect()->route('login.form')
+                    ->with('error', 'Tài khoản Google này chưa được đăng ký trong hệ thống!');
+            }
+
+            // Nếu user tồn tại => cập nhật google_id (nếu cần)
+            if (!$user->google_id) {
+                $user->google_id = $googleUser->getId();
+                $user->save();
+            }
+
+            // Đăng nhập vào hệ thống Laravel
+            Auth::login($user);
+
+            // dd(Auth::user());
+
+            // Lưu vào session
+            session(['google_id' => $googleUser->getId()]);
+
+            return redirect()->route('home.index')->with('success', 'Đăng nhập thành công!');
+        } catch (Exception $e) {
+            Auth::logout();
+            return redirect()->route('login.form')
+                ->with('error', 'Lỗi đăng nhập Google: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Đăng xuất
+     */
     public function logout(Request $request)
     {
         Auth::logout();
 
+        // Xóa session google_id
+        $request->session()->forget('google_id');
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('login.form')->with('success', 'Đã đăng xuất!');
     }
 }
-

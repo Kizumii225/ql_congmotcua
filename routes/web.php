@@ -838,6 +838,19 @@ Route::get('/', function () {
     return redirect()->route('home.index');
 })->name('/');
 
+// Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
+// Route::post('/register', [AuthController::class, 'register'])->name('register');
+// Route::post('/login', [Login1Controller::class, 'login'])->name('login.post');
+
+Route::get('/login', [Login1Controller::class, 'showLoginForm'])->name('login.form');
+
+// Đăng nhập với Google
+Route::get('/auth/google/redirect', [Login1Controller::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [Login1Controller::class, 'handleGoogleCallback'])->name('google.callback');
+
+// Đăng xuất
+Route::post('/logout', [Login1Controller::class, 'logout'])->name('logout');
+
 Route::prefix('user')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
@@ -879,11 +892,8 @@ Route::prefix('user')->group(function () {
     Route::get('/search-sidebar', [SearchController::class, 'searchSidebar'])->name('search.sidebar');
 
 
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::get('/login', [Login1Controller::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [Login1Controller::class, 'login'])->name('login.post');
-    Route::post('/logout', [Login1Controller::class, 'logout'])->name('logout');
+
+
 
 });
 

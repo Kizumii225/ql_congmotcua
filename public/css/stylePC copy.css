@@ -3,7 +3,7 @@
     --gray-color: #555;
     /* --header-height: 70px; */
     /* --header-nav-pc: 55px; */
-    /* --search-height: calc(var(--header-height) + var(--header-nav-pc)); */
+    --search-height: calc(var(--header-height) + var(--header-nav-pc));
     /* --title-height: calc(var(--header-height) + var(--header-nav-pc) + 10px); */
 }
 
@@ -24,10 +24,10 @@
     .slider-img {
         height: 400px;
     }
-    /* .body-bar,
+    .body-bar,
     .nav-search {
         margin-top: var(--search-height);
-    } */
+    }
 
     .nav-search-mobile {
         display: none !important;
@@ -187,60 +187,22 @@
         opacity: 0.8;
     }
 
-    /* Container */
-    .search-box {
-        position: relative;
-        width: 100%;
-    }
-
-    /* Input */
-    .search-input {
-        width: 100%;
-        padding: 0.5rem 2.5rem 0.5rem 1rem; /* padding-right đủ cho icon */
-        border-radius: 25px; /* bo tròn các góc */
-        border: 1px solid #ccc;
-        transition: all 0.3s;
-    }
-
-    /* Khi focus */
-    .search-input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 8px rgba(56, 66, 137, 0.3);
-    }
-    /* Icon kính lúp */
-    .search-icon {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #888;
-        font-size: 1.2rem;
-        pointer-events: none; /* icon không chặn click */
-    }
-    /* Kết quả dropdown */
     #searchResults {
-        position: absolute;
-        top: 110%;
-        left: 0;
-        width: 100%;
-        max-height: 300px;
         overflow-y: auto;
         display: none;
+        z-index: 9999;
         background-color: #fff;
+        box-shadow: 0 5px 5px rgba(48, 48, 48, 0.582);
+        top: 30px;
+        padding: 10px;
         border-radius: 8px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1050;
     }
-
     #searchResults .search-item {
         padding: 10px;
         border-bottom: 1px solid #ddd;
     }
-
     #searchResults .search-item:hover {
-        background-color: #f0f0f0;
-        cursor: pointer;
+        background-color: #b7b7b7;
     }
     .sreach-a {
         text-decoration: none;
@@ -392,24 +354,25 @@
     }
 
     #order-products-list .product-info .price {
-        color: #d6336c;
+        color: #d6336c; /* màu đỏ Bootstrap */
         font-weight: 700;
         font-size: 1rem;
     }
 
-    .main-header1 {
+    /* Sidebar */
+    .main-header {
         width: 100% !important;
         margin-left: 0 !important;
         display: block;
     }
 
-    .main-header1 {
-        position: fixed;
+    .main-header {
+        position: fixed; 
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 1030;
-        height: 70px;
+        z-index: 1030; 
+        height: 70px; 
         background-color: #fff;
         border-bottom: 1px solid #dee2e6;
     }
@@ -422,11 +385,31 @@
         background-color: #40498d;
     }
 
+    .main-sidebar {
+        background-color: var(--primary-color);
+
+        position: fixed; /* cố định bên trái */
+        top: 70px; /* cách header đúng chiều cao */
+        left: 0;
+        width: 250px; /* độ rộng sidebar */
+        z-index: 1020; /* thấp hơn header */
+        transition: all 0.3s;
+        i,
+        p,
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
     .brand-link .brand-image {
         margin-left: 0;
     }
 
-    .main-header1 .nav-link {
+    .main-header .nav-link {
         min-height: 4.5rem;
     }
 
@@ -536,26 +519,5 @@
         .mini-sidebar.open {
             width: 200px;
         }
-    }
-
-    /* Tên người dùng ellipsis nếu quá dài */
-    .user-account .fw-bold {
-        max-width: 120px; /* tùy chỉnh theo layout */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* Dropdown menu to hơn */
-    .user-account .dropdown-menu {
-        min-width: 200px; /* tăng kích thước mặc định */
-        font-size: 1rem; /* chữ lớn hơn một chút */
-        padding: 0.5rem 0;
-    }
-    .user-account .dropdown-item {
-        padding: 0.5rem 1rem; /* tăng padding */
-    }
-    .user-account .dropdown-divider {
-        margin: 0.5rem 0;
     }
 }
