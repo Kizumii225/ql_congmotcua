@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Body -->
-<div class="body container mt-2 bg-white">    
+<div class="body container p-3">    
   <div class="body-bar row d-flex align-items-center">
     <div class="col-1 text-center py-3">
         <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>

@@ -4,23 +4,7 @@
 
 @section('content')
     <!-- Body -->
-    <div class="body container p-3 mt-2 bg-white">
-        <!-- Search -->
-        <div class="nav-search nav-search-mobile row d-flex align-items-center bg-white">
-            <div class="col-1 text-center py-3">
-                <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
-            </div>
-            <div class="col-8">
-                <div class="search input-group">
-                    <input type="text" class="form-control w-50" placeholder="Nhập từ khóa...">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="{{ route('orders.cart') }}"><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
-                <a class="btn p-3" href="{{ route('user.profile') }}"><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
-            </div>
-        </div>
+    <div class="body container p-3" style="min-height: 600px;">
 
         <div class="">
             <div class="row mt-2 mt-md-5 g-0">

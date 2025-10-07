@@ -11,44 +11,83 @@ use App\Models\Notification;
 class UserController extends Controller
 {
     // load trang profile
-public function profile()
+    public function profile()
 {
     if (Auth::check()) {
-        $google_id = session('google_id'); // bạn lưu google_id vào session
+        $google_id = session('google_id'); // lấy google_id từ session
+        if (!$google_id) {
+            return redirect()->route('login.form');
+        }
     } else {
         return redirect()->route('login.form');
     }
 
-    // Lấy thông tin user từ bảng account24s
+    // Thông tin người dùng
     $userInfo = DB::table('account24s')
                     ->where('google_id', $google_id)
                     ->first();
 
     if (!$userInfo) {
-        return redirect()->route('login.form')->with('error', 'Người dùng không tồn tại');
+        return redirect()->route('login.form')->with('error', 'Người dùng không tồn tại!');
     }
 
-    // Load đơn hàng chờ xác nhận (trạng thái = 1)
-    $orders = DB::table('24_hoadon')
-        ->where('trangthai', 1)
-        ->where('id_sinhvien', $userInfo->id)
-        ->orderByDesc('ngaytao')
+    // Load đơn hàng chờ xác nhận
+    $orders = DB::table('hoadon')
+        ->join('trangthai', 'hoadon.tt_id', '=', 'trangthai.tt_id')
+        ->where('hoadon.tt_id', 1) 
+        ->where('user_id', $userInfo->id) // giả sử user_id trong hoadon trỏ tới id trong account24s
+        ->orderByDesc('created_at')
+        ->select(
+            'hoadon.hd_id', 
+            'hoadon.created_at', 
+            'hoadon.tongtien', 
+            'trangthai.ten as trangthai'
+        )
         ->get();
 
-    // Load lịch sử mua hàng (trạng thái 2 hoặc 3)
-    $rawHistory = DB::table('24_hoadon')
-        ->whereIn('trangthai', [2,3])
-        ->where('id_sinhvien', $userInfo->id)
-        ->orderBy('id', 'desc')
-        ->get();
+    //Load lịch sử mua hàng 
+    $rawHistory = DB::table('hoadon')
+        ->join('chitiethoadon as cthd', 'hoadon.hd_id', '=', 'cthd.hd_id')
+        ->join('sanpham as sp', 'cthd.sp_id', '=', 'sp.sp_id')
+        ->join('danhmuc as dm', 'sp.dm_id', '=', 'dm.dm_id')
+        ->join('trangthai as tt', 'hoadon.tt_id', '=', 'tt.tt_id')
+        ->whereIn('hoadon.tt_id',[2, 3] ) 
+        ->where('hoadon.user_id', $userInfo->id)
+        ->select(
+            'hoadon.hd_id',
+            'hoadon.tongtien',
+            'tt.ten',
+            'hoadon.tt_id',
+            'sp.tensp',
+            'dm.ten as danhmuc',
+            'cthd.soluong',
+            'sp.image_url'
+        )
+        ->orderBy('hoadon.hd_id', 'desc')
+        ->get()
+        ->groupBy('hd_id')
+        ->map(function ($items) {
+            return [
+                'tongtien' => $items->first()->tongtien,
+                'trangthai' => $items->first()->ten,
+                'tt_id' => $items->first()->tt_id,
+                'sanphams' => $items->map(function ($item) {
+                    return [
+                        'tensp' => $item->tensp,
+                        'danhmuc' => $item->danhmuc,
+                        'soluong' => $item->soluong,
+                        'hinhanh' => $item->image_url,
+                    ];
+                })
+            ];
+        });
 
-    return view('dongphuc.profile', [
+    return view('user.profile', [
         'userInfo' => $userInfo,
         'orders' => $orders,
         'groupedHistory' => $rawHistory
     ]);
 }
-
 
 
     // load form đăng nhập

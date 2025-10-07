@@ -5,29 +5,19 @@
     /* --header-nav-pc: 55px; */
     /* --search-height: calc(var(--header-height) + var(--header-nav-pc)); */
     /* --title-height: calc(var(--header-height) + var(--header-nav-pc) + 10px); */
+    background: #ececec;
 }
 
 /* PC */
 @media (min-width: 768px) {
-    /* .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 3;
-    } */
-
     body {
+        margin-top: 70px;
         font-size: 1.6rem !important;
     }
     /* Index */
     .slider-img {
         height: 400px;
     }
-    /* .body-bar,
-    .nav-search {
-        margin-top: var(--search-height);
-    } */
 
     .nav-search-mobile {
         display: none !important;
@@ -41,31 +31,9 @@
         margin-top: var(--header-height);
     }
 
-    /* .title strong {
-      font-size: 2.5rem;
-    }
-  
-    .title h6 {
-      font-size: 1.6rem;
-    } */
-
     .nav-footer {
         display: none;
     }
-
-    /* .nav-item {
-        margin-top: 5px;
-        padding: 10px 6px;
-    }
-
-    .nav-header {
-        display: flex;
-    }
-
-    .nav-header .nav-item:hover {
-        opacity: 0.8;
-        color: #d96c3b;
-    } */
 
     /* Store */
     .product-item {
@@ -413,10 +381,6 @@
         background-color: #fff;
         border-bottom: 1px solid #dee2e6;
     }
-    .content-wrapper {
-        margin-top: 70px; /* bằng chiều cao header */
-        padding: 20px;
-    }
 
     li.nav-item:hover {
         background-color: #40498d;
@@ -463,20 +427,19 @@
     }
 
     /* Mini Sidebar cố định bên trái, không che header */
-    .mini-sidebar {
+    /* .mini-sidebar {
         position: fixed;
-        top: 70px; /* bằng chiều cao header */
-        left: 0;
-        width: 50px; /* chiều rộng khi thu nhỏ */
+        top: 70px; 
+        width: 50px; 
         height: calc(100% - 70px);
         background-color: var(--primary-color);
-        z-index: 1020;
         transition: width 0.3s;
         overflow-x: hidden;
-    }
+        z-index: 1050;
+    } */
 
     /* Nút toggle */
-    .mini-sidebar-toggle {
+    /* .mini-sidebar-toggle {
         width: 50px;
         height: 50px;
         display: flex;
@@ -484,58 +447,79 @@
         align-items: center;
         cursor: pointer;
         color: #fff;
-    }
+    } */
 
     /* Menu sidebar */
-    .mini-sidebar-menu {
-        display: none; /* mặc định ẩn */
+    /* .mini-sidebar-menu {
+        display: none;
         flex-direction: column;
-        padding: 10px;
-    }
+        transition: background 0.2s;
+        text-decoration: none;
+    } */
 
-    .mini-sidebar-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .mini-sidebar-menu li {
-        margin: 15px 0;
+    /* .mini-sidebar-menu li {
+        margin: 10px 0;
     }
 
     .mini-sidebar-menu li a {
+        padding: 5px;
         display: flex;
         align-items: center;
         color: #ffffff;
         text-decoration: none;
         white-space: nowrap;
     }
+    .mini-sidebar-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
 
     .mini-sidebar-menu li a i {
         margin-right: 10px;
         font-size: 18px;
-    }
+    } */
 
-    /* Khi mở sidebar */
+    /* Khi mở sidebar 
     .mini-sidebar.open {
         width: 250px;
+    }
+    .content-wrapper {
+        transition: margin-left 0.3s;
+        margin-left: 50px;
+    }
+    .content-wrapper.shift {
+        margin-left: 250px; 
+    }*/
+    /* Khi sidebar mở rộng 
+    .mini-sidebar.open ~ .container-fluid.content-wrapper {
+        margin-left: 250px; 
     }
 
     .mini-sidebar.open .mini-sidebar-menu {
         display: flex;
-    }
+    }*/
 
     /* Responsive nhỏ hơn 768px */
-    @media (max-width: 768px) {
+    /* @media (max-width: 768px) {
         .mini-sidebar {
             top: 70px;
             height: calc(100% - 70px);
             width: 50px;
         }
+    } */
 
-        .mini-sidebar.open {
-            width: 200px;
-        }
+    /* Hover cho mục chính */
+    .sidebar-item:hover {
+        background-color: #e9ecef;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Hover cho mục con */
+    .sidebar-subitem:hover {
+        background-color: #dee2e6;
+        border-radius: 3px;
+        padding-left: 8px;
     }
 
     /* Tên người dùng ellipsis nếu quá dài */
@@ -549,7 +533,7 @@
     /* Dropdown menu to hơn */
     .user-account .dropdown-menu {
         min-width: 200px; /* tăng kích thước mặc định */
-        font-size: 1rem; /* chữ lớn hơn một chút */
+        font-size: 1.5rem; /* chữ lớn hơn một chút */
         padding: 0.5rem 0;
     }
     .user-account .dropdown-item {

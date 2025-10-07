@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 html {
@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    background: #f8f8f8;
+    margin-top: 50px;
 }
 
 :root {
@@ -108,7 +108,6 @@ ul {
     font-size: 1.5rem;
 }
 
-
 .order {
     font-size: 1.3rem;
 }
@@ -158,9 +157,9 @@ ul {
     border-radius: 50%;
     z-index: -1;
 }
- .nav-search-mobile {
-        display: block;
-    }
+/* .nav-search-mobile {
+    display: block;
+} */
 
 .nav-item {
     display: flex;
@@ -493,9 +492,20 @@ ul {
     animation: spin 2s linear infinite;
 }
 
-.main-sidebar,
+/* .main-sidebar,
 .main-header {
     display: none;
+} */
+
+.main-header1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    height: 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .main-footer {
@@ -525,6 +535,13 @@ ul {
     }
     .fixed-bottom-mobile .btn {
         margin-top: 10px;
+    }
+    /* ẩn tên người dùng và logo với mobile */
+    .user-account .fw-bold {
+        display: none;
+    }
+    .sidebar {
+        display: none;
     }
 }
 

@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Body -->
-      <div class="body show-detail container p-3 bg-white">
+      <div class="body show-detail container p-3">
         <!-- Product-Detail -->
         <div class="product-detail row mt-4">
             <!-- Product-img -->
